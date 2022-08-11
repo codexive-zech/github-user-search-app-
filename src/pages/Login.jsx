@@ -9,7 +9,9 @@ const Login = () => {
       <section className="container">
         <img src={loginImg} alt="github user login" />
         <h1>Github User</h1>
-        <Link className="btn">Login</Link>
+        <Link to="/" className="btn">
+          Login
+        </Link>
       </section>
     </Wrapper>
   );
