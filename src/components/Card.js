@@ -8,9 +8,9 @@ const Card = () => {
     avatar_url,
     bio,
     company,
-    email,
+
     location,
-    login,
+
     name,
     twitter_username,
     html_url,
