@@ -2,8 +2,31 @@ import React from "react";
 import styled from "styled-components";
 import { useAuth0 } from "@auth0/auth0-react";
 
+const defaultImage = `https://static.generated.photos/vue-static/face-generator/landing/wall/23.jpg`;
+
 const Navbar = () => {
-  return <Wrapper>navbar component</Wrapper>;
+  const { isAuthenticated, loginWithRedirect, logout, user, isLoading } =
+    useAuth0();
+  // const authenticatedUser = isAuthenticated && user;
+  return (
+    <Wrapper>
+      {isAuthenticated ? (
+        <img src={user.picture || defaultImage} alt={user.name} />
+      ) : null}
+      {isAuthenticated ? (
+        <h4>
+          Welcome, <strong>{user.name.toUpperCase()}</strong>
+        </h4>
+      ) : null}
+      {isAuthenticated ? (
+        <button onClick={() => logout({ returnTo: window.location.origin })}>
+          Logout
+        </button>
+      ) : (
+        <button onClick={loginWithRedirect}>Login</button>
+      )}
+    </Wrapper>
+  );
 };
 
 const Wrapper = styled.nav`

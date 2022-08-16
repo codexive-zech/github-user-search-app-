@@ -8,9 +8,15 @@ import { Auth0Provider } from "@auth0/auth0-react";
 
 ReactDOM.render(
   <React.StrictMode>
-    <GithubProvider>
-      <App />
-    </GithubProvider>
+    <Auth0Provider
+      domain="dev-i512nehz.us.auth0.com"
+      clientId="k0I6isFApmG3ylBfn1NBtewO8IiqYVmU"
+      redirectUri={window.location.origin}
+    >
+      <GithubProvider>
+        <App />
+      </GithubProvider>
+    </Auth0Provider>
   </React.StrictMode>,
   document.getElementById("root")
 );
