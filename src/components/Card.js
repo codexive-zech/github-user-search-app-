@@ -3,19 +3,17 @@ import { GithubContext } from "../context/context";
 import styled from "styled-components";
 import { MdBusiness, MdLocationOn, MdLink } from "react-icons/md";
 const Card = () => {
-  const { githubUser } = useContext(GithubContext);
+  const { githubUser } = useContext(GithubContext); // making use of the github users state via context api
   const {
     avatar_url,
     bio,
     company,
-
     location,
-
     name,
     twitter_username,
     html_url,
     blog,
-  } = githubUser;
+  } = githubUser; // destructing the github user state to fish out props needed and use in the return jsx
   return (
     <Wrapper>
       <header>

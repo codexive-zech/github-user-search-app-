@@ -3,10 +3,11 @@ import { GithubContext } from "../context/context";
 import styled from "styled-components";
 
 const Followers = () => {
-  const { githubFollowers } = useContext(GithubContext);
+  const { githubFollowers } = useContext(GithubContext); // making use of the github users state via context api
   return (
     <Wrapper>
       <div className="followers">
+        {/* iterate over the github followers state array */}
         {githubFollowers.map((follower, index) => {
           const { avatar_url, html_url, login } = follower;
           return (

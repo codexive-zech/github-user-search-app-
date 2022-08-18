@@ -3,23 +3,22 @@ import styled from "styled-components";
 import { GithubContext } from "../context/context";
 import { Pie3D, Column3D, Bar3D, Doughnut2D } from "./Charts";
 
-// dev-i512nehz
 const Repos = () => {
-  const { githubRepos } = useContext(GithubContext);
+  const { githubRepos } = useContext(GithubContext); // making use of the github users state via context api
 
   const languages = githubRepos.reduce((total, item) => {
-    const { language, stargazers_count } = item;
+    const { language, stargazers_count } = item; // destructuring github repository state
     if (!language) return total; // if language value return out
     // checking if language prop does not exist in the object
     if (!total[language]) {
-      total[language] = { label: language, value: 1, stars: stargazers_count };
+      total[language] = { label: language, value: 1, stars: stargazers_count }; // creating language props (label and value) for the chart
     }
     // checking if language prop already exist in the object
     else {
       total[language] = {
-        ...total[language],
-        value: total[language].value + 1,
-        stars: total[language].stars + stargazers_count,
+        ...total[language], // return back all the prop value
+        value: total[language].value + 1, // adding one to the language prop value
+        stars: total[language].stars + stargazers_count, // increasing the star count
       };
     }
     return total;
@@ -31,30 +30,30 @@ const Repos = () => {
     }) // sort for the highest values
     .slice(0, 5); // set out only the best 5 lang
 
-  const mostPopularLanguage = Object.values(languages)
+  const mostPopularLanguage = Object.values(languages) // convert the return object to an array
     .sort((a, b) => {
       return b.stars - a.stars;
-    })
+    }) // sort for the highest values
     .map((item) => {
       return { ...item, value: item.stars };
-    })
-    .slice(0, 5);
+    }) // iterate over the sorted value to change value prop for star
+    .slice(0, 5); // set out only the best 5 lang
 
   const stars = githubRepos.reduce((total, item) => {
-    const { stargazers_count, name } = item;
-    total[stargazers_count] = { label: name, value: stargazers_count };
+    const { stargazers_count, name } = item; // destructure github repository state
+    total[stargazers_count] = { label: name, value: stargazers_count }; // creating stars count prop (label and value) for the chart
     return total;
-  }, {});
+  }, {}); // return an object
 
-  const mostStarredRepo = Object.values(stars).slice(-5).reverse();
+  const mostStarredRepo = Object.values(stars).slice(-5).reverse(); // convert the returned object to an array, set out the highest last 5 and reverse them
 
   const forks = githubRepos.reduce((total, item) => {
-    const { name, forks } = item;
-    total[forks] = { label: name, value: forks };
+    const { name, forks } = item; // destructure github repository state
+    total[forks] = { label: name, value: forks }; // creating forks count prop (label and value) for the chart
     return total;
-  }, {});
+  }, {}); // return an object
 
-  const mostForkedRepo = Object.values(forks).slice(-5).reverse();
+  const mostForkedRepo = Object.values(forks).slice(-5).reverse(); // convert the returned object to an array, set out the highest last 5 and reverse them
 
   return (
     <section className="section">

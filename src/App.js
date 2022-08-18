@@ -4,12 +4,14 @@ import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 
 function App() {
   return (
+    // auth-wrapper handles display when authentication is successful
     <AuthWrapper>
       <Router>
         <Routes>
           <Route
             path="/"
             element={
+              // wrapping the dashboard into a private route, must be authenticated to access it
               <PrivateRoute>
                 <Dashboard />
               </PrivateRoute>

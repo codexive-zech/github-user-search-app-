@@ -6,21 +6,21 @@ import axios from "axios";
 
 const rootUrl = "https://api.github.com";
 
-const GithubContext = React.createContext();
+const GithubContext = React.createContext(); // creating context api to share state Data
 
 const GithubProvider = ({ children }) => {
-  const [githubUser, setGithubUser] = useState(mockUser);
-  const [githubRepos, setGithubRepos] = useState(mockRepos);
-  const [githubFollowers, setGithubFollowers] = useState(mockFollowers);
-  const [request, setRequest] = useState(0);
-  const [error, setError] = useState({ show: false, msg: "" });
-  const [isLoading, setIsLoading] = useState(false);
+  const [githubUser, setGithubUser] = useState(mockUser); // define the github user state
+  const [githubRepos, setGithubRepos] = useState(mockRepos); // define the github repository state
+  const [githubFollowers, setGithubFollowers] = useState(mockFollowers); // define the github followers state
+  const [request, setRequest] = useState(0); // define the api request state
+  const [error, setError] = useState({ show: false, msg: "" }); // define an object for error
+  const [isLoading, setIsLoading] = useState(false); // define a loading state
 
   const checkRequest = () => {
     axios(`${rootUrl}/rate_limit`)
       .then(({ data }) => {
         let { remaining } = data.rate;
-        setRequest(remaining);
+        setRequest(remaining); // set request state
         if (remaining === 0) {
           displayError(true, "Sorry, You have reached your hourly limit rate");
         }
@@ -28,40 +28,43 @@ const GithubProvider = ({ children }) => {
       .catch((error) => {
         console.log(error);
       });
-  };
+  }; // making a fetch call to retrieve remaining api limit
 
   const searchGithubUser = async (user) => {
-    displayError();
-    setIsLoading(true);
+    displayError(); // invoking the default params for error display
+    setIsLoading(true); // set loading state
     const response = await axios(`${rootUrl}/users/${user}`).catch((error) =>
       console.log(error)
-    );
+    ); // using axios to make api call and catch any error
+    // checking if response returned is TRUE
     if (response) {
-      setGithubUser(response.data);
+      setGithubUser(response.data); // set github user state
     } else {
-      displayError(true, "Sorry, Username does not exist");
+      displayError(true, "Sorry, Username does not exist"); // display error if no user exist
     }
-    setIsLoading(false);
-    checkRequest();
-  };
+    setIsLoading(false); // set loading state
+    checkRequest(); // check api calls left
+  }; // making an api call to search for github users
 
   const displayGithubFollowers = async (user) => {
     const response = await axios(`${rootUrl}/users/${user}/followers`).catch(
       (err) => console.log(err)
-    );
+    ); // using axios to make api call and catch any error
+    // checking if response returned is TRUE
     if (response) {
-      setGithubFollowers(response.data);
+      setGithubFollowers(response.data); // set github followers state
     }
-  };
+  }; // displaying github user followers
 
   const displayGithubRepos = async (user) => {
     const response = await axios(
       `${rootUrl}/users/${user}/repos?per_page=100`
-    ).catch((err) => console.log(err));
+    ).catch((err) => console.log(err)); // using axios to make api call and catch any error
+    // checking if response returned is TRUE
     if (response) {
-      setGithubRepos(response.data);
+      setGithubRepos(response.data); // set github repository state
     }
-  };
+  }; // displaying github user repositories
 
   const displayError = (show = false, msg = "") => {
     setError({ show, msg });

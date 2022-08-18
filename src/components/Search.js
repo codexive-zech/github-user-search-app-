@@ -3,7 +3,7 @@ import styled from "styled-components";
 import { MdSearch } from "react-icons/md";
 import { GithubContext } from "../context/context";
 const Search = () => {
-  const [user, setUser] = useState("");
+  const [user, setUser] = useState(""); // define a user state
   const {
     request,
     error,
@@ -11,16 +11,19 @@ const Search = () => {
     displayGithubFollowers,
     displayGithubRepos,
     isLoading,
-  } = useContext(GithubContext);
+  } = useContext(GithubContext); // making use of the github users state via context api
+
   const submitUser = (e) => {
-    e.preventDefault();
+    e.preventDefault(); // stop form default action
+    // checking if user state has value
     if (user) {
-      searchGithubUser(user);
-      displayGithubFollowers(user);
-      displayGithubRepos(user);
-      setUser("");
+      searchGithubUser(user); // invoke github user search based on the user state value
+      displayGithubFollowers(user); // invoke github followers display based on the user state value
+      displayGithubRepos(user); // invoke github repository display based on the user state value
+      setUser(""); // set the user state
     }
-  };
+  }; // handing submit button
+
   return (
     <section className="section">
       <Wrapper className="section-center">

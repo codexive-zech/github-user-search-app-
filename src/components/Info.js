@@ -5,8 +5,8 @@ import { GoRepo, GoGist } from "react-icons/go";
 import { FiUsers, FiUserPlus } from "react-icons/fi";
 
 const UserInfo = () => {
-  const { githubUser } = useContext(GithubContext);
-  const { followers, following, public_repos, public_gists } = githubUser;
+  const { githubUser } = useContext(GithubContext); // making use of the github users state via context api
+  const { followers, following, public_repos, public_gists } = githubUser; // destructuring github user state
 
   const items = [
     {
@@ -37,7 +37,7 @@ const UserInfo = () => {
       value: public_gists,
       color: "yellow",
     },
-  ];
+  ]; // make an array object so as to use props
   return (
     <section className="section">
       <Wrapper className="section-center">

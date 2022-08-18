@@ -5,26 +5,25 @@ import { useAuth0 } from "@auth0/auth0-react";
 const defaultImage = `https://static.generated.photos/vue-static/face-generator/landing/wall/23.jpg`;
 
 const Navbar = () => {
-  const { isAuthenticated, loginWithRedirect, logout, user, isLoading } =
-    useAuth0();
-  // const authenticatedUser = isAuthenticated && user;
+  const { isAuthenticated, logout, user } = useAuth0(); // making use of auth0 states
   return (
     <Wrapper>
+      {/* checking if user is authenticated to display user image */}
       {isAuthenticated ? (
         <img src={user.picture || defaultImage} alt={user.name} />
       ) : null}
+      {/* checking if user is authenticated to display user name */}
       {isAuthenticated ? (
         <h4>
           Welcome, <strong>{user.name.toUpperCase()}</strong>
         </h4>
       ) : null}
+      {/* checking if user is authenticated to display logout button */}
       {isAuthenticated ? (
         <button onClick={() => logout({ returnTo: window.location.origin })}>
           Logout
         </button>
-      ) : (
-        <button onClick={loginWithRedirect}>Login</button>
-      )}
+      ) : null}
     </Wrapper>
   );
 };
